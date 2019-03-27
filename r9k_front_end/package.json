@@ -1,6 +1,7 @@
 {
   "name": "r9k_front_end",
   "version": "0.1.0",
+  "homepage": "http://r9k.tinusf.com",
   "private": true,
   "dependencies": {
     "react": "^16.8.5",
