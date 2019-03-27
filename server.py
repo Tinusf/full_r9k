@@ -24,7 +24,7 @@ def hello():
 
 @app.route("/insert_sentence", methods=["PUT"])
 def insert_word():
-    json_input_data = json.loads(request.data)
+    json_input_data = json.loads(request.data.decode())
     sentence = json_input_data["sentence"]
     return format_answer(check_unique(sentence))
 

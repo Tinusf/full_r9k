@@ -15,7 +15,7 @@ class App extends Component {
     e.preventDefault();
     const data = { sentence: this.state.text };
     fetchData(
-      "http://localhost:5000/insert_sentence",
+      "http://flask.tinusf.com/insert_sentence",
       "PUT",
       data
     ).then((response) => {
@@ -27,7 +27,7 @@ class App extends Component {
 
   fetchAllUsedWords = async () => {
     const used_words = await fetchData(
-      "http://localhost:5000/used_words",
+      "http://flask.tinusf.com/used_words",
       'GET'
     ).then((data) => {
       const text = data.text
@@ -37,7 +37,7 @@ class App extends Component {
 
   fetchChatLog = async () => {
     const used_words = await fetchData(
-      "http://localhost:5000/chat_logs",
+      "http://flask.tinusf.com/chat_logs",
       'GET'
     ).then((data) => {
       const logs = data.text
