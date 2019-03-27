@@ -6,7 +6,8 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      text: ""
+      text: "",
+      chatLogs: "Welcome to r9k-chat."
     };
   }
 
@@ -18,7 +19,9 @@ class App extends Component {
       "PUT",
       data
     ).then((response) => {
-      console.log(response)
+      this.componentDidMount();
+      this.setState({ status: response.text })
+      console.log(response);
     });
   };
 
@@ -29,12 +32,22 @@ class App extends Component {
     ).then((data) => {
       const text = data.text
       this.setState({ used_words: text })
-      console.log(data);
+    });
+  };
+
+  fetchChatLog = async () => {
+    const used_words = await fetchData(
+      "http://localhost:5000/chat_logs",
+      'GET'
+    ).then((data) => {
+      const logs = data.text
+      this.setState({ chatLogs: logs })
     });
   };
 
   async componentDidMount() {
     this.fetchAllUsedWords();
+    this.fetchChatLog();
   }
 
 
@@ -52,7 +65,7 @@ class App extends Component {
             className="outputTextarea"
             readOnly
             rows="10"
-            value="Welcome to r9k-chat.">
+            value={this.state.chatLogs}>
           </textarea>
         </div>
         <form>
@@ -63,6 +76,9 @@ class App extends Component {
             onChange={e => this.setState({ text: e.target.value })}>
 
           </textarea>
+          <p>
+            {this.state.status}
+          </p>
           <div>
             <input type="submit" onClick={e => this.handleSubmit(e)} ></input>
           </div>

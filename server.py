@@ -7,6 +7,10 @@ CORS(app)
 
 used_words = set()
 
+# TODO: add timestamp to these messages.
+chat_logs = []
+n_of_lines_to_return = 20
+
 
 def format_answer(text, status_code=200):
     # TODO: fix status_code.
@@ -30,6 +34,11 @@ def get_all_words():
     return format_answer(", ".join(used_words))
 
 
+@app.route("/chat_logs", methods=["GET"])
+def get_chat_logs():
+    return format_answer("\n".join(chat_logs[-n_of_lines_to_return:]))
+
+
 def check_unique(sentence):
     """
     This function will check if every word is unique and if it is then it will insert
@@ -48,5 +57,6 @@ def check_unique(sentence):
         local_used_words.add(word)
 
     used_words.update(local_used_words)
+    chat_logs.append(sentence)
 
     return "Success"
